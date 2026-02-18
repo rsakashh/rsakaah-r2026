@@ -1,0 +1,23 @@
+<!-- ======================= robots.txt ======================= -->
+User-agent: *
+Allow: /
+
+Sitemap: https://yourusername.github.io/rs-akash/sitemap.xml
+
+
+<!-- ======================= Adsense Code (Add inside <head>) ======================= -->
+<!-- Replace ca-pub-XXXXXXXXXXXX with your real Adsense Publisher ID -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+
+
+<!-- ======================= Example Ad Unit (Place inside body where you want ad) ======================= -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXX"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>

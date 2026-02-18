@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RS AKASH - Islamic Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="Bangladesh Sehri Iftar Time, Ramadan Calendar and Namaz Time - RS AKASH Islamic Portal">
+<meta name="keywords" content="sehri iftar time 2026, bangladesh ramadan calendar, namaz time bd, roja time">
+<meta name="author" content="RS AKASH">
+<meta name="robots" content="index, follow">
+<style>
+:root{
+--primary:#0b5ed7;
+--bg:#eef2f7;
+--card:#ffffff;
+--text:#111;
+}
+.dark{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#f1f5f9;
+}
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:var(--bg);
+color:var(--text);
+transition:.3s;
+}
+header{
+background:linear-gradient(135deg,#0b5ed7,#1e3a8a);
+color:#fff;
+padding:25px;
+text-align:center;
+}
+.container{max-width:1100px;margin:auto;padding:20px}
+.card{
+background:var(--card);
+padding:20px;
+border-radius:16px;
+margin-top:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+}
+.time-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:15px;
+margin-top:20px;
+}
+.box{
+background:#f1f5f9;
+padding:15px;
+border-radius:12px;
+text-align:center;
+transition:.3s;
+}
+.dark .box{background:#334155}
+button,select{
+padding:10px 15px;
+border-radius:8px;
+border:none;
+margin:5px 2px;
+}
+button{background:var(--primary);color:#fff;cursor:pointer}
+footer{text-align:center;padding:20px;font-size:14px}
+.dua{margin-top:15px;font-size:15px;line-height:1.6}
+.lang-toggle{margin-top:10px;text-align:center;}
+.lang-toggle button{margin:0 5px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>RS AKASH</h1>
+<div>Islamic Sehri, Iftar & Namaz Portal</div>
+<div class="lang-toggle">
+<button onclick="setLang('en')">English</button>
+<button onclick="setLang('bn')">বাংলা</button>
+</div>
+</header>
+
+<div class="container">
+<div class="card">
+<button onclick="getLocation()">Auto Detect Location</button>
+<button onclick="toggleDark()">Dark Mode</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+<h3 id="locationName"></h3>
+<div id="hijriDate" style="font-size:18px;margin-top:8px"></div>
+<div class="time-grid" id="times"></div>
+
+<div class="dua">
+<h4>Sehri Dua:</h4>
+রَبِّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ
+<br><br>
+<h4>Iftar Dua:</h4>
+اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ
+</div>
+</div>
+</div>
+
+<!-- Bottom App Menu -->
+<div style="position:fixed;bottom:0;left:0;width:100%;background:#0b5ed7;color:white;display:flex;justify-content:space-around;padding:12px 0">
+<div onclick="window.scrollTo(0,0)">Home</div>
+<div onclick="loadToday()">Today</div>
+<div onclick="loadMonth()">Calendar</div>
+<div onclick="getLocation()">GPS</div>
+</div>
+
+<footer>
+Developer: rsa.akash@yahoo.com
+</footer>
+
+<script>
+let lang='en';
+
+function setLang(l){lang=l;alert('Language set to '+l);}
+
+function toggleDark(){document.body.classList.toggle("dark");}
+
+function getLocation(){
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(pos=>{
+fetchTimes(pos.coords.latitude,pos.coords.longitude);
+});
+}else{
+alert("Geolocation not supported");
+}
+}
+
+async function fetchTimes(lat,lon){
+const today=new Date();
+const d=today.getDate();
+const m=today.getMonth()+1;
+const y=today.getFullYear();
+const url=`https://api.aladhan.com/v1/timings/${d}-${m}-${y}?latitude=${lat}&longitude=${lon}&method=1`;
+const res=await fetch(url);
+const data=await res.json();
+const t=data.data.timings;
+
+document.getElementById("result").style.display="block";
+document.getElementById("locationName").innerText=data.data.meta.timezone;
+document.getElementById("hijriDate").innerText="Hijri: "+data.data.date.hijri.date;
+
+const container=document.getElementById("times");
+container.innerHTML="";
+const prayers=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+
+prayers.forEach(p=>{
+const div=document.createElement("div");
+div.className="box";
+div.setAttribute("data-prayer",p);
+div.innerHTML=`<strong>${p}</strong><br>${t[p]}`;
+container.appendChild(div);
+});
+
+highlightNextPrayer(t);
+}
+
+function highlightNextPrayer(t){
+const now=new Date();
+const prayers=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+let next=null;
+prayers.forEach(p=>{
+const [h,m]=t[p].split(':');
+const pt=new Date();
+pt.setHours(h,m,0);
+if(pt>now && !next) next=p;
+});
+document.querySelectorAll('.box').forEach(b=>b.style.border="none");
+if(next){
+document.querySelector(`[data-prayer='${next}']`).style.border="3px solid #0b5ed7";
+}
+}
+
+// Optional: Load full Ramadan Calendar (30 days)
+async function loadMonth(){
+const city="Dhaka";
+const year=new Date().getFullYear();
+const month=3; // Example, adjust as needed
+const url=`https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=Bangladesh&method=1`;
+const res=await fetch(url);
+const data=await res.json();
+console.log(data);
+alert('Ramadan calendar loaded in console (for dev)');
+}
+</script>
+
+</body>
+</html>
