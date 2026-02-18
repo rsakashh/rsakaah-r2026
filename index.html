@@ -3,34 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Countdown</title>
-    <script>
-        function getCurrentDateTime() {
-            // Current date and time (UTC) updated for demonstration purposes
-            const now = new Date("2026-02-18T23:30:01Z");
-            document.getElementById('current-date').innerText = `Current Date: ${now.toISOString().split('T')[0]}`;
-            // Assume Sehri and Iftar times for demonstration
-            const sehriTime = '05:00 AM'; // Example Sehri time
-            const iftarTime = '06:30 PM'; // Example Iftar time
-            document.getElementById('sehri-iftar').innerText = `Sehri: ${sehriTime}, Iftar: ${iftarTime}`;
+    <title>Ramadan Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
         }
-        function autoDetectLocation() {
-            // Default location to Dhaka, Bangladesh
-            return "Dhaka, Bangladesh";
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
         }
-    </script>
+        .header, .dua {
+            text-align: center;
+        }
+        .ramadan-day {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px 0;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body onload="getCurrentDateTime()">
-    <h1>Ramadan Day Numbers</h1>
-    <ul>
-        <li>Roja 1 - 2026-03-23</li>
-        <li>Roja 2 - 2026-03-24</li>
-        <li>Roja 3 - 2026-03-25</li>
-        <!-- Add more days as needed -->
-    </ul>
-    <button id="today-btn" onclick="getCurrentDateTime()">Today</button>
-    <div id="current-date"></div>
-    <div id="sehri-iftar"></div>
-    <div id="location">Location: ${autoDetectLocation()}</div>
+<body>
+    <div class="header">
+        <h1>Ramadan Portal</h1>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <button onclick="showToday()">Today</button>
+    </div>
+    <div id="ramadan-days">
+        <!-- Ramadan days will be inserted here -->
+    </div>
+    <div class="dua">
+        <h2>Islamic Dua for Ramadan</h2>
+        <p>O Allah! Grant us to witness the month of Ramadan, make it a month of blessing and mercy for us.</p>
+    </div>
+    <script>
+        const ramadanDays = [
+            { day: 1, date: '2026-03-07', sehri: '05:00', iftar: '18:10' },
+            { day: 2, date: '2026-03-08', sehri: '05:00', iftar: '18:11' },
+            { day: 3, date: '2026-03-09', sehri: '05:00', iftar: '18:12' },
+            // Add all 30 days here...
+        ];
+
+        function renderRamadanDays() {
+            const container = document.getElementById('ramadan-days');
+            ramadanDays.forEach(({ day, date, sehri, iftar }) => {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'ramadan-day';
+                dayDiv.innerHTML = `Day ${day}: ${date} <br>Sehri: ${sehri}, Iftar: ${iftar}`;
+                container.appendChild(dayDiv);
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function showToday() {
+            const today = new Date();
+            const day = today.getUTCDate();
+            const month = today.getUTCMonth() + 1; // Months are zero-based
+            const year = today.getUTCFullYear();
+            alert(`Today is: ${year}-${month}-${day}`);
+            // Fetch and display prayer times based on today's date
+        }
+
+        window.onload = renderRamadanDays;
+    </script>
 </body>
 </html>
