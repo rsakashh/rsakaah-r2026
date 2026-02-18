@@ -3,60 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramadan Calendar</title>
+    <title>RS AKASH - Islamic Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Bangladesh Sehri Iftar Time, Ramadan Calendar and Namaz Time - RS AKASH Islamic Portal">
+    <meta name="keywords" content="sehri iftar time 2026, bangladesh ramadan calendar, namaz time bd, roja time">
     <style>
-        body { font-family: Arial, sans-serif; }
-        .calendar { display: none; }
-        .day { margin: 5px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        :root{
+            --primary:#0b5ed7;
+            --bg:#eef2f7;
+            --card:#ffffff;
+            --text:#111;
+        }
+        .dark{
+            --bg:#0f172a;
+            --card:#1e293b;
+            --text:#f1f5f9;
+        }
+        body{
+            margin:0;
+            font-family:Poppins,sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            transition:.3s;
+        }
+        header{
+            background:linear-gradient(135deg,#0b5ed7,#1e3a8a);
+            color:#fff;
+            padding:25px;
+            text-align:center;
+        }
+        .container{max-width:1100px;margin:auto;padding:20px}
+        .card{
+            background:var(--card);
+            padding:20px;
+            border-radius:16px;
+            margin-top:20px;
+            box-shadow:0 10px 25px rgba(0,0,0,.08);
+            transition:.3s;
+        }
+        .time-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+            gap:15px;
+            margin-top:20px;
+        }
+        .box{
+            background:#f1f5f9;
+            padding:15px;
+            border-radius:12px;
+            text-align:center;
+            transition:.3s;
+        }
+        .dark .box{background:#334155}
+        button,select{
+            padding:10px 15px;
+            border-radius:8px;
+            border:none;
+            margin:5px 2px;
+            cursor:pointer;
+            background:var(--primary);
+            color:#fff;
+        }
+        footer{text-align:center;padding:20px;font-size:14px}
+        .dua{margin-top:15px;font-size:15px;line-height:1.6}
+        .lang-toggle{margin-top:10px;text-align:center;}
+        .lang-toggle button{margin:0 5px;}
+        .calendar-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+            gap:10px;
+            margin-top:20px;
+        }
+        .calendar-day{
+            background:#f1f5f9;
+            padding:15px;
+            border-radius:8px;
+            border-left:4px solid var(--primary);
+            transition:.3s;
+        }
+        .dark .calendar-day{background:#334155}
+        .calendar-day:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(0,0,0,.1)}
+        .calendar-day-number{font-weight:bold;color:var(--primary);font-size:18px}
+        .calendar-day-time{font-size:12px;margin-top:8px}
+        .location-selector{margin:15px 0}
+        .location-selector input{padding:8px 12px;border:1px solid #ccc;border-radius:5px;width:200px;max-width:100%}
     </style>
 </head>
 <body>
-    <h1>Ramadan Calendar</h1>
-    <button id="calendarBtn">Show Ramadan Calendar</button>
 
-    <div class="calendar" id="calendar">
-        <h2>Ramadan 2026</h2>
-        <div class="day">1st Ramadan: Sehri - 04:10, Iftar - 18:33</div>
-        <div class="day">2nd Ramadan: Sehri - 04:09, Iftar - 18:34</div>
-        <div class="day">3rd Ramadan: Sehri - 04:08, Iftar - 18:35</div>
-        <div class="day">4th Ramadan: Sehri - 04:07, Iftar - 18:36</div>
-        <div class="day">5th Ramadan: Sehri - 04:06, Iftar - 18:37</div>
-        <div class="day">6th Ramadan: Sehri - 04:05, Iftar - 18:38</div>
-        <div class="day">7th Ramadan: Sehri - 04:04, Iftar - 18:39</div>
-        <div class="day">8th Ramadan: Sehri - 04:03, Iftar - 18:40</div>
-        <div class="day">9th Ramadan: Sehri - 04:02, Iftar - 18:41</div>
-        <div class="day">10th Ramadan: Sehri - 04:01, Iftar - 18:42</div>
-        <div class="day">11th Ramadan: Sehri - 04:00, Iftar - 18:43</div>
-        <div class="day">12th Ramadan: Sehri - 03:59, Iftar - 18:44</div>
-        <div class="day">13th Ramadan: Sehri - 03:58, Iftar - 18:45</div>
-        <div class="day">14th Ramadan: Sehri - 03:57, Iftar - 18:46</div>
-        <div class="day">15th Ramadan: Sehri - 03:56, Iftar - 18:47</div>
-        <div class="day">16th Ramadan: Sehri - 03:55, Iftar - 18:48</div>
-        <div class="day">17th Ramadan: Sehri - 03:54, Iftar - 18:49</div>
-        <div class="day">18th Ramadan: Sehri - 03:53, Iftar - 18:50</div>
-        <div class="day">19th Ramadan: Sehri - 03:52, Iftar - 18:51</div>
-        <div class="day">20th Ramadan: Sehri - 03:51, Iftar - 18:52</div>
-        <div class="day">21st Ramadan: Sehri - 03:50, Iftar - 18:53</div>
-        <div class="day">22nd Ramadan: Sehri - 03:49, Iftar - 18:54</div>
-        <div class="day">23rd Ramadan: Sehri - 03:48, Iftar - 18:55</div>
-        <div class="day">24th Ramadan: Sehri - 03:47, Iftar - 18:56</div>
-        <div class="day">25th Ramadan: Sehri - 03:46, Iftar - 18:57</div>
-        <div class="day">26th Ramadan: Sehri - 03:45, Iftar - 18:58</div>
-        <div class="day">27th Ramadan: Sehri - 03:44, Iftar - 18:59</div>
-        <div class="day">28th Ramadan: Sehri - 03:43, Iftar - 19:00</div>
-        <div class="day">29th Ramadan: Sehri - 03:42, Iftar - 19:01</div>
-        <div class="day">30th Ramadan: Sehri - 03:41, Iftar - 19:02</div>
+<header>
+    <h1>RS AKASH</h1>
+    <div>Islamic Sehri, Iftar & Namaz Portal</div>
+    <div class="lang-toggle">
+        <button onclick="setLang('en')">English</button>
+        <button onclick="setLang('bn')">বাংলা</button>
+    </div>
+</header>
+
+<div class="container">
+    <div class="card">
+        <button onclick="getLocation()">📍 Auto Detect Location</button>
+        <button onclick="toggleDark()">🌙 Dark Mode</button>
+        
+        <div class="location-selector">
+            <input type="text" id="cityInput" placeholder="Enter city name (e.g., Dhaka)" value="Dhaka">
+            <button onclick="searchByCity()">Search</button>
+        </div>
     </div>
 
-    <script>
-        document.getElementById('calendarBtn').onclick = function() {
-            var calendar = document.getElementById('calendar');
-            if (calendar.style.display === 'none') {
-                calendar.style.display = 'block';
-            } else {
-                calendar.style.display = 'none';
-            }
-        };
-    </script>
+    <div class="card" id="result" style="display:none">
+        <h3 id="locationName"></h3>
+        <div id="hijriDate" style="font-size:18px;margin-top:8px"></div>
+        <div class="time-grid" id="times"></div>
+        
+        <div class="dua">
+            <h4>Sehri Dua:</h4>
+            رَبِّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ
+            <br><br>
+            <h4>Iftar Dua:</h4>
+            اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ
+        </div>
+    </div>
+
+    <div class="card" id="calendarCard" style="display:none">
+        <h2>📅 Ramadan 1447 Calendar - <span id="calendarLocation"></span></h2>
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+</div>
+
+<!-- Bottom App Menu -->
+<div style="position:fixed;bottom:0;left:0;width:100%;background:#0b5ed7;color:white;display:flex;justify-content:space-around;padding:12px 0;z-index:1000">
+    <div onclick="window.scrollTo(0,0)" style="cursor:pointer">🏠 Home</div>
+    <div onclick="loadToday()" style="cursor:pointer">📅 Today</div>
+    <div onclick="loadMonth()" style="cursor:pointer">📆 Calendar</div>
+    <div onclick="getLocation()" style="cursor:pointer">📍 GPS</div>
+</div>
+
+<footer>
+    Developer: rsa.akash@yahoo.com
+</footer>
+
+<script>
+let lang='en';
+let currentLat = null;
+let currentLon = null;
+let currentCity = 'Dhaka';
+
+function setLang(l){lang=l;}
+
+function toggleDark(){document.body.classList.toggle("dark");}
+
+function getLocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(pos=>{
+            currentLat = pos.coords.latitude;
+            currentLon = pos.coords.longitude;
+            fetchTimes(currentLat, currentLon);
+            loadMonth();
+        });
+    }else{
+        alert("Geolocation not supported");
+    }
+}
+
+function searchByCity(){
+    const city = document.getElementById('cityInput').value;
+    if(city){
+        currentCity = city;
+        fetchTimesByCity(city);
+        loadMonthByCity(city);
+    }
+}
+
+async function fetchTimes(lat,lon){
+    const today=new Date();
+    const d=today.getDate();
+    const m=today.getMonth()+1;
+    const y=today.getFullYear();
+    const url=`https://api.aladhan.com/v1/timings/${d}-${m}-${y}?latitude=${lat}&longitude=${lon}&method=1`;
+    
+    try{
+        const res=await fetch(url);
+        const data=await res.json();
+        const t=data.data.timings;
+        
+        document.getElementById("result").style.display="block";
+        document.getElementById("locationName").innerText=data.data.meta.timezone;
+        document.getElementById("hijriDate").innerText="Hijri: "+data.data.date.hijri.date;
+        
+        const container=document.getElementById("times");
+        container.innerHTML="";
+        const prayers=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+        
+        prayers.forEach(p=>{
+            const div=document.createElement("div");
+            div.className="box";
+            div.setAttribute("data-prayer",p);
+            div.innerHTML=`<strong>${p}</strong><br>${t[p]}`;
+            container.appendChild(div);
+        });
+        
+        highlightNextPrayer(t);
+    }catch(e){
+        alert('Error fetching prayer times');
+    }
+}
+
+async function fetchTimesByCity(city){
+    const today=new Date();
+    const d=today.getDate();
+    const m=today.getMonth()+1;
+    const y=today.getFullYear();
+    const url=`https://api.aladhan.com/v1/timings/${d}-${m}-${y}?city=${city}&country=Bangladesh&method=1`;
+    
+    try{
+        const res=await fetch(url);
+        const data=await res.json();
+        const t=data.data.timings;
+        
+        document.getElementById("result").style.display="block";
+        document.getElementById("locationName").innerText=city+", "+data.data.meta.timezone;
+        document.getElementById("hijriDate").innerText="Hijri: "+data.data.date.hijri.date;
+        
+        const container=document.getElementById("times");
+        container.innerHTML="";
+        const prayers=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+        
+        prayers.forEach(p=>{
+            const div=document.createElement("div");
+            div.className="box";
+            div.setAttribute("data-prayer",p);
+            div.innerHTML=`<strong>${p}</strong><br>${t[p]}`;
+            container.appendChild(div);
+        });
+        
+        highlightNextPrayer(t);
+    }catch(e){
+        alert('City not found. Please try another location.');
+    }
+}
+
+function highlightNextPrayer(t){
+    const now=new Date();
+    const prayers=["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+    let next=null;
+    prayers.forEach(p=>{
+        const [h,m]=t[p].split(':');
+        const pt=new Date();
+        pt.setHours(h,m,0);
+        if(pt>now && !next) next=p;
+    });
+    document.querySelectorAll('.box').forEach(b=>b.style.border="none");
+    if(next){
+        document.querySelector(`[data-prayer='${next}']`).style.border="3px solid #0b5ed7";
+    }
+}
+
+async function loadMonth(){
+    if(!currentLat || !currentLon) return;
+    await loadMonthData(currentLat, currentLon, currentCity);
+}
+
+async function loadMonthByCity(city){
+    await loadMonthData(null, null, city);
+}
+
+async function loadMonthData(lat, lon, city){
+    const year = new Date().getFullYear();
+    const month = 9; // Ramadan is 9th month in Hijri calendar, fetch month 3 for 2026
+    
+    let url;
+    if(city){
+        url=`https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=Bangladesh&method=1`;
+    } else {
+        url=`https://api.aladhan.com/v1/calendarByAddress?address=${city}&latitude=${lat}&longitude=${lon}&method=1&month=${month}&year=${year}`;
+    }
+    
+    try{
+        const res=await fetch(url);
+        const data=await res.json();
+        
+        if(data.data && Array.isArray(data.data)){
+            document.getElementById("calendarCard").style.display="block";
+            document.getElementById("calendarLocation").innerText=city;
+            
+            const grid = document.getElementById("calendarGrid");
+            grid.innerHTML="";
+            
+            data.data.forEach((day, index)=>{
+                if(day.timings){
+                    const div = document.createElement("div");
+                    div.className = "calendar-day";
+                    const sehri = day.timings.Fajr || 'N/A';
+                    const iftar = day.timings.Maghrib || 'N/A';
+                    const hijriDay = day.date.hijri.day || (index + 1);
+                    
+                    div.innerHTML=`
+                        <div class="calendar-day-number">Day ${hijriDay}</div>
+                        <div class="calendar-day-time">
+                            🌙 Sehri: ${sehri}<br>
+                            🌅 Iftar: ${iftar}
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                }
+            });
+        }
+    }catch(e){
+        console.log('Error loading calendar:', e);
+    }
+}
+
+function loadToday(){
+    if(currentCity){
+        fetchTimesByCity(currentCity);
+    } else {
+        getLocation();
+    }
+}
+
+// Load Dhaka as default on page load
+window.addEventListener('load', () => {
+    fetchTimesByCity('Dhaka');
+    loadMonthByCity('Dhaka');
+});
+</script>
+
 </body>
 </html>
